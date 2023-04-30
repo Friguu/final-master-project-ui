@@ -5,10 +5,7 @@ import Info from "./Views/Info";
 import Main from "./Views/Main";
 import Management from "./Views/Management";
 import getWeb3 from "./Web3/InitWeb3";
-
 import shipment_sc_data from "./Contract_JSONs/shipment_sc.json";
-
-//HOSTING AWS AMPLIFYs
 
 const App = () => {
   const web3 = useRef(0);
