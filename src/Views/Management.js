@@ -81,6 +81,19 @@ const Management = (props) => {
     setSelectedRouteInt(routeInt);
   };
 
+  const endShipmentCall = async () => {
+    showInfo("Transaction sent");
+    try {
+      let tx = await props.contract.methods.endShipment(shipmentId).send({
+        from: props.accounts[0],
+      });
+      let message = "Transaction complete " + tx.transactionHash;
+      showSuccess(message);
+    } catch (error) {
+      showError("Transaction failed");
+    }
+  };
+
   const getIntForStep = (_step) => {
     if (_step === "Pickup Location") {
       return 0;
@@ -220,6 +233,21 @@ const Management = (props) => {
             Please only enter 1 for Delivery Step or 2 for Shipment Step.
           </small>
         </p>
+      </div>
+      <br></br>
+      <div>
+        <Toast ref={toast} position="bottom-left" />
+        <InputText
+          placeholder="Shipment ID"
+          value={shipmentId}
+          onChange={(e) => setShipmentId(e.target.value)}
+        />
+        <Button
+          className="man-button"
+          label={"End Shipment"}
+          onClick={(e) => endShipmentCall(e.target.value)}
+          severity="secondary"
+        />
       </div>
       <br></br>
       <br></br>
