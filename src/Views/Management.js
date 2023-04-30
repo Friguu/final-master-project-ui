@@ -259,7 +259,7 @@ const Management = (props) => {
           options={routeSteps}
           optionLabel="name"
           showClear
-          placeholder="Select a City"
+          placeholder="Select a Step"
           className="w-full md:w-14rem"
         />
         <Button
