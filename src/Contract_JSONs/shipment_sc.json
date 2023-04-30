@@ -1,5 +1,5 @@
 {
-  "address": "0xE905B380650430A6FA75229A6DCfF9dD357B34ac",
+  "address": "0x8CDE457a6388d7050CdA65f41fb5447Eb7686A1B",
   "abi": [
     {
       "inputs": [
@@ -40,6 +40,30 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_shipmentId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum Shipments.deliverySteps",
+          "name": "_step",
+          "type": "uint8"
+        }
+      ],
+      "name": "deliveryStepReached",
+      "type": "event"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -72,7 +96,7 @@
         },
         {
           "internalType": "uint256",
-          "name": "_delId",
+          "name": "_stepType",
           "type": "uint256"
         }
       ],
@@ -101,9 +125,23 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_shipmentId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum Shipments.shipmentSteps",
+          "name": "_step",
+          "type": "uint8"
+        }
+      ],
+      "name": "shippingStepReached",
+      "type": "event"
     },
     {
       "inputs": [
@@ -128,11 +166,68 @@
       "inputs": [
         {
           "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "currentStepIndex",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
           "name": "_shipmentId",
           "type": "uint256"
         }
       ],
-      "name": "getCurrentStep",
+      "name": "getCurrDeliveryStep",
+      "outputs": [
+        {
+          "internalType": "enum Shipments.deliverySteps",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_shipmentId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getCurrShipmentState",
+      "outputs": [
+        {
+          "internalType": "enum Shipments.shipmentSteps",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_shipmentId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getCurrShippingStep",
       "outputs": [
         {
           "internalType": "enum Shipments.routeSteps",
@@ -170,7 +265,7 @@
           "type": "uint256"
         }
       ],
-      "name": "getNextStep",
+      "name": "getNextShippingStep",
       "outputs": [
         {
           "internalType": "enum Shipments.routeSteps",

@@ -181,6 +181,7 @@ const Management = (props) => {
           severity="secondary"
         />
       </div>
+      <br></br>
       <div>
         <Toast ref={toast} position="bottom-left" />
         <InputText
@@ -195,6 +196,7 @@ const Management = (props) => {
           severity="secondary"
         />
       </div>
+      <br></br>
       <div>
         <InputText
           placeholder="Shipment ID"

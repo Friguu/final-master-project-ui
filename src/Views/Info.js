@@ -8,7 +8,8 @@ import "./Info.css";
 const Info = (props) => {
   const [shipmentId, setShipmentId] = useState("");
   const [id, setId] = useState("");
-  const [step, setStep] = useState("");
+  const [shippingStep, setShippingStep] = useState("");
+  const [deliveryStep, setDeliveryStep] = useState("");
   const [fRoute, setfRoute] = useState("");
   const toast = useRef(null);
 
@@ -62,13 +63,29 @@ const Info = (props) => {
   const getCurrStepCall = () => {
     try {
       props.contract.methods
-        .getCurrentStep(shipmentId)
+        .getCurrShippingStep(shipmentId)
         .call({
           from: props.accounts[0],
         })
-        .then(setStep);
+        .then(setShippingStepString);
+
+      props.contract.methods
+        .getCurrDeliveryStep(shipmentId)
+        .call({
+          from: props.accounts[0],
+        })
+        .then(setDeliveryStepString);
+
       setId(shipmentId);
     } catch (error) {}
+  };
+
+  const setShippingStepString = (_step) => {
+    setShippingStep(getStringForShippingStep(_step));
+  };
+
+  const setDeliveryStepString = (_step) => {
+    setDeliveryStep(getStringForDeliveryStep(_step));
   };
 
   const getFullRoute = () => {
@@ -86,15 +103,15 @@ const Info = (props) => {
     let routeString;
     for (let i = 0; i < fullRoute.length; i++) {
       if (routeString == null) {
-        routeString = getStringForStep(fullRoute[i]);
+        routeString = getStringForShippingStep(fullRoute[i]);
       } else {
-        routeString += ", " + getStringForStep(fullRoute[i]);
+        routeString += ", " + getStringForShippingStep(fullRoute[i]);
       }
     }
     setfRoute(routeString);
   };
 
-  const getStringForStep = (_step) => {
+  const getStringForShippingStep = (_step) => {
     if (_step == 0) {
       return "Pickup Location";
     } else if (_step == 1) {
@@ -109,6 +126,22 @@ const Info = (props) => {
       return "Warehouse";
     } else if (_step == 6) {
       return "Destination";
+    }
+  };
+
+  const getStringForDeliveryStep = (_step) => {
+    if (_step == 0) {
+      return "Initialized";
+    } else if (_step == 1) {
+      return "Shipment Loaded";
+    } else if (_step == 2) {
+      return "Shipment on first intermediate delivery";
+    } else if (_step == 3) {
+      return "Shipment on main delivery";
+    } else if (_step == 4) {
+      return "Shipment on second intermediate delivery";
+    } else if (_step == 5) {
+      return "Delivery done";
     }
   };
 
@@ -140,12 +173,21 @@ const Info = (props) => {
           />
         </p>
         <p>
-          <label htmlFor="Step">Step: </label>
+          <label htmlFor="Step">Current shipping step: </label>
           <InputText
             placeholder="Step"
             disabled
             className="ship-button"
-            value={step}
+            value={shippingStep}
+          />
+        </p>
+        <p>
+          <label htmlFor="Step">Current delivery step: </label>
+          <InputText
+            placeholder="Step"
+            disabled
+            className="ship-button"
+            value={deliveryStep}
           />
         </p>
         <p>
